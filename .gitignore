@@ -1,0 +1,6 @@
+target/
+*.iml
+.idea
+
+# standard recordings contain all running processes and environment variables, so not comfortable including recordings
+*.jfr
