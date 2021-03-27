@@ -1,4 +1,4 @@
-package jcip;
+package jcip.ch14_building_custom_synchronizers;
 
 import net.jcip.annotations.*;
 
@@ -10,15 +10,18 @@ import net.jcip.annotations.*;
  * @author Brian Goetz and Tim Peierls
  */
 @ThreadSafe
-public class ThreadGate {
+public class SafeThreadGate implements ThreadGate {
     // CONDITION-PREDICATE: opened-since(n) (isOpen || generation>n)
     @GuardedBy("this") private boolean isOpen;
     @GuardedBy("this") private int generation;
+    @GuardedBy("this") private int proceeded;
 
+    @Override
     public synchronized void close() {
         isOpen = false;
     }
 
+    @Override
     public synchronized void open() {
         ++generation;
         isOpen = true;
@@ -26,9 +29,17 @@ public class ThreadGate {
     }
 
     // BLOCKS-UNTIL: opened-since(generation on entry)
+    @Override
     public synchronized void await() throws InterruptedException {
-        int arrivalGeneration = generation;
+        int arrivalGeneration = generation; // await before open: arrival gen == 0
         while (!isOpen && arrivalGeneration == generation)
             wait();
+
+        proceeded++;
+    }
+
+    @Override
+    public synchronized int getProceeded() {
+        return proceeded;
     }
 }

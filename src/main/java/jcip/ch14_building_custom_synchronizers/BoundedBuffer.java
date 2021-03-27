@@ -1,5 +1,6 @@
-package jcip;
+package jcip.ch14_building_custom_synchronizers;
 
+import jcip.ch14_building_custom_synchronizers.BaseBoundedBuffer;
 import net.jcip.annotations.*;
 
 /**
@@ -10,7 +11,7 @@ import net.jcip.annotations.*;
  * @author Brian Goetz and Tim Peierls
  */
 @ThreadSafe
-        public class BoundedBuffer <V> extends BaseBoundedBuffer<V> {
+public class BoundedBuffer <V> extends BaseBoundedBuffer<V> {
     // CONDITION PREDICATE: not-full (!isFull())
     // CONDITION PREDICATE: not-empty (!isEmpty())
     public BoundedBuffer() {

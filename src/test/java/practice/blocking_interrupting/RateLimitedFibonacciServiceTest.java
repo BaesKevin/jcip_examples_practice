@@ -5,7 +5,6 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;

@@ -1,5 +1,6 @@
-package jcip;
+package jcip.ch14_building_custom_synchronizers;
 
+import jcip.ch14_building_custom_synchronizers.BaseBoundedBuffer;
 import net.jcip.annotations.*;
 
 /**

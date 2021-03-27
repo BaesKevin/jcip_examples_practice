@@ -1,15 +1,16 @@
 package practice.blocking_interrupting;
 
-import jcip.ch6_task_execution.ThreadPerTaskExecutor;
 import org.junit.Test;
 import practice.threadsafety.FibonacciSequence;
 import practice.util.NamedThreadFactory;
 
 import java.math.BigDecimal;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -66,10 +67,11 @@ public class FibonacciSequenceTest {
 
             try {
                 startLatch.countDown();
+
                 sequenceService.shutdown();
                 boolean terminated = sequenceService.awaitTermination(1, TimeUnit.SECONDS);
-
                 assertThat(terminated).isTrue();
+
                 BigDecimal fib101 = new BigDecimal("354224848179261915075");
                 assertThat(sequence.getNext()).isEqualTo(fib101);
             } catch (InterruptedException e) {

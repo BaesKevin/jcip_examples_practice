@@ -1,4 +1,4 @@
-package jcip;
+package jcip.ch14_building_custom_synchronizers;
 
 import net.jcip.annotations.*;
 
